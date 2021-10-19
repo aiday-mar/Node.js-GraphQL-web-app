@@ -11,7 +11,7 @@ const noteSchema = new mongoose.Schema(
     // reference the author's object ID
     author: {
       type: mongoose.Schema.Types.ObjectId,
-	  // The authro reference to User is the same reference as what is in the favoritedBy array below
+      // The author reference to User is the same reference as what is in the favoritedBy array below
       ref: 'User',
       required: true
     },

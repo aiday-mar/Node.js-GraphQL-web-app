@@ -1,5 +1,6 @@
 const { gql } = require('apollo-server-express');
 
+// The mutations are defined in the same place as the models 
 module.exports = gql`
   scalar DateTime
 
@@ -37,7 +38,6 @@ module.exports = gql`
     noteFeed(cursor: String): NoteFeed
   }
 
-  // The mutations are defined in the same place as the models 
   type Mutation {
     newNote(content: String!): Note
     updateNote(id: ID!, content: String!): Note!

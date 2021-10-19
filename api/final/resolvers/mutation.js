@@ -6,15 +6,18 @@ const {
 } = require('apollo-server-express');
 const mongoose = require('mongoose');
 require('dotenv').config();
-
 const gravatar = require('../util/gravatar');
 
 module.exports = {
   newNote: async (parent, args, { models, user }) => {
+    
+    // If the current user does not exist yet, then we throw an authentication error
     if (!user) {
       throw new AuthenticationError('You must be signed in to create a note');
     }
 
+    // Otherwise we access the Note model, and inside we create a new note with 
+    // the content being the content of the argument and the author is the id of the current user
     return await models.Note.create({
       content: args.content,
       author: mongoose.Types.ObjectId(user.id),
@@ -27,9 +30,12 @@ module.exports = {
       throw new AuthenticationError('You must be signed in to delete a note');
     }
 
-    // find the note
+    // find the note using the findById function of the Node model
+    // await literally suspends the function execution until the promise settles, and then resumes it with the promise result.
     const note = await models.Note.findById(id);
+    
     // if the note owner and current user don't match, throw a forbidden error
+    // You can access the note ownor by writing note.author, where note is a Note
     if (note && String(note.author) !== user.id) {
       throw new ForbiddenError("You don't have permissions to delete the note");
     }
@@ -57,12 +63,14 @@ module.exports = {
     }
 
     // Update the note in the db and return the updated note
+    // await forces the process to run this function before running anything else 
     return await models.Note.findOneAndUpdate(
       {
         _id: id
       },
       {
         $set: {
+          // we're setting a new content 
           content
         }
       },
@@ -71,6 +79,7 @@ module.exports = {
       }
     );
   },
+  
   toggleFavorite: async (parent, { id }, { models, user }) => {
     // if no user context is passed, throw auth error
     if (!user) {
@@ -79,6 +88,8 @@ module.exports = {
 
     // check to see if the user has already favorited the note
     let noteCheck = await models.Note.findById(id);
+    
+    // once the note is found, you can check if in that note, you can find the user.id, and which index it would have in that case 
     const hasUser = noteCheck.favoritedBy.indexOf(user.id);
 
     // if the user exists in the list
@@ -88,9 +99,11 @@ module.exports = {
         id,
         {
           $pull: {
+            // we remove the user.id from the favoritedBy array
             favoritedBy: mongoose.Types.ObjectId(user.id)
           },
           $inc: {
+            // we decrement the favoriteCount by one 
             favoriteCount: -1
           }
         },
@@ -106,6 +119,7 @@ module.exports = {
         id,
         {
           $push: {
+            // otherwise we push the user.id into the favoritedBy array
             favoritedBy: mongoose.Types.ObjectId(user.id)
           },
           $inc: {
@@ -123,9 +137,10 @@ module.exports = {
     email = email.trim().toLowerCase();
     // hash the password
     const hashed = await bcrypt.hash(password, 10);
-    // create the gravatar url
+    // create the gravatar url from the trimmed and lower case email
     const avatar = gravatar(email);
     try {
+      // creating a new user in the User model
       const user = await models.User.create({
         username,
         email,
@@ -133,7 +148,7 @@ module.exports = {
         password: hashed
       });
 
-      // create and return the json web token
+      // create and return the json web token using the JWT_SECRET defined in the .env file 
       return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     } catch (err) {
       // if there's a problem creating the account, throw an error
@@ -147,6 +162,7 @@ module.exports = {
       email = email.trim().toLowerCase();
     }
 
+    // we find in the User model, either the email or the username we have been provided with 
     const user = await models.User.findOne({
       $or: [{ email }, { username }]
     });
@@ -163,6 +179,7 @@ module.exports = {
     }
 
     // create and return the json web token
+    // for this we need the id associated to the user 
     return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
   }
 };

@@ -28,16 +28,17 @@ module.exports = {
 
     // if there is a cursor
     // our query will look for notes with an ObjectId less than that of the cursor
+    // _id will make sense in the context of the models.Note
     if (cursor) {
       cursorQuery = { _id: { $lt: cursor } };
     }
 
-    // find the limit + 1 of notes in our db, sorted newest to oldest
+    // find the limit + 1 of notes in our db, sorted newest to oldest meaning in decreasing order of time
     let notes = await models.Note.find(cursorQuery)
       .sort({ _id: -1 })
       .limit(limit + 1);
 
-    // if the number of notes we find exceeds our limit
+    // if the number of notes we find exceeds our limit, since indeed we should have limit + 1 elements in the notes 
     // set hasNextPage to true & trim the notes to the limit
     if (notes.length > limit) {
       hasNextPage = true;

@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema(
   },
   {
     // Assigns createdAt and updatedAt fields with a Date type
-	// In a separate set of curly brackets
+    // In a separate set of curly brackets
     timestamps: true
   }
 );

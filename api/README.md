@@ -1,1 +1,1 @@
-Web Node.JS project built on an API.
+# Node.JS API project built on GraphQL and Apollo

@@ -1,3 +1,5 @@
+// Here we define query functions, which do not change the database 
+
 module.exports = {
   notes: async (parent, args, { models }) => {
     return await models.Note.find().limit(100);
@@ -6,6 +8,7 @@ module.exports = {
     return await models.Note.findById(args.id);
   },
   user: async (parent, args, { models }) => {
+    // Here args means the arguments passed to the query function
     return await models.User.findOne({ username: args.username });
   },
   users: async (parent, args, { models }) => {

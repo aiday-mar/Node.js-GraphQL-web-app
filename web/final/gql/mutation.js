@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+// The mutation is named with capital letters, the qgl command is written within single quotes
 const NEW_NOTE = gql`
   mutation newNote($content: String!) {
     newNote(content: $content) {
@@ -38,12 +39,14 @@ const EDIT_NOTE = gql`
   }
 `;
 
+// when you delete a note here, you do not return anything
 const DELETE_NOTE = gql`
   mutation deleteNote($id: ID!) {
     deleteNote(id: $id)
   }
 `;
 
+// after you toggle or untoggle the favorite you want to show the id of the object which has been updated as well as the new favoriteCount
 const TOGGLE_FAVORITE = gql`
   mutation toggleFavorite($id: ID!) {
     toggleFavorite(id: $id) {

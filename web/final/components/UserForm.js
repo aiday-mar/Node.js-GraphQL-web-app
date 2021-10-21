@@ -28,6 +28,7 @@ const UserForm = props => {
   const [values, setValues] = useState();
 
   // update the state when a user types in the form
+  // where we have added to the values variables 
   const onChange = event => {
     setValues({
       ...values,
@@ -50,6 +51,7 @@ const UserForm = props => {
           });
         }}
       >
+        // only when we sign up do we show this 
         {props.formType === 'signup' && (
           <React.Fragment>
             <label htmlFor="username">Username:</label>

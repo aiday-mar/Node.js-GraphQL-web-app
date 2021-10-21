@@ -12,6 +12,7 @@ const NoteWrapper = styled.div`
 
 import Note from './Note';
 
+// The $ allows us to set variables
 const NoteFeed = ({ notes }) => {
   return (
     <div className="note-feed">

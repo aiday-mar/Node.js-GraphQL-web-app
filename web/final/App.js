@@ -1,3 +1,5 @@
+// File is imported as a script in the main index.js file 
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {

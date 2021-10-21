@@ -42,7 +42,7 @@ const Header = props => {
         {data.isLoggedIn ? (
           <ButtonAsLink
             onClick={() => {
-              // remove the token
+              // remove the token when we log out
               localStorage.removeItem('token');
               // clear the application's cache
               client.resetStore();

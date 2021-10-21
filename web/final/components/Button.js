@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+// it's a normal button but with a specific style
 
 const Button = styled.button`
   display: block;

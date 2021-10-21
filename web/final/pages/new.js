@@ -13,6 +13,7 @@ const NewNote = props => {
 
   const [data, { loading, error }] = useMutation(NEW_NOTE, {
     // refetch the GET_NOTES and GET_MY_NOTES queries to update the cache
+    // your application can display the results of local cache modifications immediately, while also refetching in the background to obtain the very latest data from the server
     refetchQueries: [{ query: GET_MY_NOTES }, { query: GET_NOTES }],
     onCompleted: data => {
       // when complete, redirect the user to the note page

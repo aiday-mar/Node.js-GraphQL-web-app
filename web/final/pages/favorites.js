@@ -6,7 +6,7 @@ import { GET_MY_FAVORITES } from '../gql/query';
 
 const Favorites = () => {
   useEffect(() => {
-    // update the document title
+    // update the document title when this JS script is called 
     document.title = 'Favorites — Notedly';
   });
 
@@ -16,6 +16,7 @@ const Favorites = () => {
   if (loading) return 'Loading...';
   // if there is an error fetching the data, display an error message
   if (error) return `Error! ${error.message}`;
+  
   // if the query is successful and there are notes, return the feed of notes
   // else if the query is successful and there aren't notes, display a message
   if (data.me.favorites.length !== 0) {

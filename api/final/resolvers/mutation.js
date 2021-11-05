@@ -16,14 +16,24 @@ module.exports = {
       throw new AuthenticationError('You must be signed in to create a note');
     }
 
+    // adding the course
+    models.Course.create({
+      name: args.course
+    })
+
     // Otherwise we access the Note model, and inside we create a new note with 
     // the content being the content of the argument and the author is the id of the current user
     return await models.Note.create({
       content: args.content,
       author: mongoose.Types.ObjectId(user.id),
-      favoriteCount: 0
+      favoriteCount: 0,
+      // adding the course
+      course: mongoose.Schema.Types.ObjectId(args.course),
     });
   },
+
+  // ADD THE POSSIBILITY TO ADD COURSES
+
   deleteNote: async (parent, { id }, { models, user }) => {
     // if not a user, throw an Authentication Error
     if (!user) {
@@ -132,6 +142,33 @@ module.exports = {
       );
     }
   },
+
+  addCourse: async (parent, { name }, { models, user }) => {
+
+    if (!user) {
+      throw new AuthenticationError();
+    }
+
+    const hasCourse = user.courses.indexOf(name);
+
+    if (hasCourse >= 0) {
+      return user.courses;
+    } else {
+      // if the course doesn't exist in the user array then add it
+      return await models.User.findByIdAndUpdate(
+        user.id,
+        {
+          $push: {
+            courses: name
+          }
+        },
+        {
+          new: true
+        }
+      );
+    }
+  },
+
   signUp: async (parent, { username, email, password }, { models }) => {
     // normalize email address
     email = email.trim().toLowerCase();

@@ -9,5 +9,10 @@ module.exports = {
   // We fin the ids of the users such that they are in the favoritedBy array of the note 
   favoritedBy: async (note, args, { models }) => {
     return await models.User.find({ _id: { $in: note.favoritedBy } });
-  }
+  },
+
+  // course
+  course: async (note, args, { models }) => {
+    return await models.Course.find({ name: note.course });
+  },
 };

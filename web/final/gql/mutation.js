@@ -16,6 +16,7 @@ const NEW_NOTE = gql`
         username
         id
       }
+      course
     }
   }
 `;
@@ -68,11 +69,22 @@ const SIGNUP_USER = gql`
   }
 `;
 
+// --- course --
+const ADD_COURSE = gql`
+  mutation addCourse($name: String!) {
+    addCourse(name: $name) {
+      name
+    }
+  }
+`;
+
 export {
   NEW_NOTE,
   EDIT_NOTE,
   DELETE_NOTE,
   TOGGLE_FAVORITE,
   SIGNIN_USER,
-  SIGNUP_USER
+  SIGNUP_USER,
+
+  ADD_COURSE
 };

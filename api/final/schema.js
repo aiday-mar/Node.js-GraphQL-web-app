@@ -5,6 +5,10 @@ const { gql } = require('apollo-server-express');
 module.exports = gql`
   scalar DateTime
 
+  type Course {
+    name: String!
+  }
+
   type Note {
     id: ID!
     content: String!
@@ -13,6 +17,8 @@ module.exports = gql`
     favoritedBy: [User]
     createdAt: DateTime!
     updatedAt: DateTime!
+
+    course: String
   }
 
   type User {
@@ -22,6 +28,9 @@ module.exports = gql`
     avatar: String
     notes: [Note!]!
     favorites: [Note!]!
+
+    courses: [String]
+    mycourses: [String]
   }
 
   type NoteFeed {
@@ -31,6 +40,8 @@ module.exports = gql`
   }
 
   type Query {
+    allcourses: [Course]
+
     notes: [Note!]!
     note(id: ID): Note!
     user(username: String!): User
@@ -40,6 +51,8 @@ module.exports = gql`
   }
 
   type Mutation {
+    addCourse(name : String): Course
+
     newNote(content: String!): Note
     updateNote(id: ID!, content: String!): Note!
     deleteNote(id: ID!): Boolean!

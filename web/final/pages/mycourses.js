@@ -15,7 +15,7 @@ const MyCourses = () => {
   if (data.me.notes.length !== 0) {
     return <NoteFeed notes={data.me.notes} />;
   } else {
-    return <p>No notes yet</p>;
+    return <p>No courses yet</p>;
   }
 };
 

@@ -23,7 +23,14 @@ const noteSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
       }
-    ]
+    ],
+
+    // --- added with the course  ---
+    course: {
+      type: String,
+      ref: 'Course',
+    },
+
   },
   {
     // Assigns createdAt and updatedAt fields with a Date type
@@ -33,5 +40,6 @@ const noteSchema = new mongoose.Schema(
 
 // Define the 'Note' model with the schema
 const Note = mongoose.model('Note', noteSchema);
+
 // Export the module
 module.exports = Note;

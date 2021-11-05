@@ -18,7 +18,15 @@ const UserSchema = new mongoose.Schema(
     },
     avatar: {
       type: String
-    }
+    },
+
+    // --- courses ----
+    courses: [
+      {
+        type: String,
+        ref: 'Course'
+      }
+    ],
   },
   {
     // Assigns createdAt and updatedAt fields with a Date type

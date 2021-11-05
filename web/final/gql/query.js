@@ -104,6 +104,22 @@ const IS_LOGGED_IN = gql`
   }
 `;
 
+const GET_COURSES = gql`
+  query allcourses {
+    allcourses {
+      name
+    }
+  }
+`;
+
+const GET_MY_COURSES = gql`
+  query courses {
+    courses {
+      name
+    }
+  }
+`;
+
 export {
   GET_NOTES,
   GET_NOTE,
@@ -111,5 +127,9 @@ export {
   GET_MY_FAVORITES,
   GET_ME,
   GET_MY_PROFILE,
-  IS_LOGGED_IN
+  IS_LOGGED_IN,
+
+  // --- courses ---
+  GET_MY_COURSES,
+  GET_COURSES,
 };

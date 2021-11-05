@@ -17,6 +17,7 @@ const TextArea = styled.textarea`
 `;
 
 const NoteForm = props => {
+
   // set the default state of the form
   const [value, setValue] = useState({ content: props.content || '' });
 
@@ -41,6 +42,15 @@ const NoteForm = props => {
           });
         }}
       >
+        <TextArea
+          required
+          type="text"
+          name="course"
+          placeholder="Course Name"
+          value={value.course}
+          onChange={onChange}
+          style={{height: 50}}
+        />
         <TextArea
           required
           type="text"

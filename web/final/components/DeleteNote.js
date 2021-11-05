@@ -7,11 +7,12 @@ import { DELETE_NOTE } from '../gql/mutation';
 import { GET_MY_NOTES, GET_NOTES } from '../gql/query';
 
 const DeleteNote = props => {
+  // we need to know the id of the note we want to delete
   const [deleteNote] = useMutation(DELETE_NOTE, {
     variables: {
       id: props.noteId
     },
-    // refetch the note list queries to update the cache
+    // refetch the note list queries to update the cache, and not have the deleted note appear again
     refetchQueries: [{ query: GET_MY_NOTES, GET_NOTES }],
     onCompleted: data => {
       // redirect the user to the "my notes" page

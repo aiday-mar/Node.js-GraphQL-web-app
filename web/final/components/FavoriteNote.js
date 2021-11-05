@@ -11,6 +11,8 @@ const FavoriteNote = props => {
   // store if the user has favorited the note as state
   const [favorited, setFavorited] = useState(
     // check if the note exists in the user favorites list
+    // the noteId property must therefore coincide with the id of the note
+    // I can access my favorite notes through .me
     props.me.favorites.filter(note => note.id === props.noteId).length > 0
   );
 
@@ -25,6 +27,7 @@ const FavoriteNote = props => {
 
   // if the user has favorited the note display the option to remove the favorite
   // else display the option to add as a favorite
+  // we set favorited to true or false directly upon the onClick in order to be able to access the state directly
   return (
     <React.Fragment>
       {favorited ? (
@@ -55,4 +58,5 @@ const FavoriteNote = props => {
   );
 };
 
+// the count is updated on the click, and the rerender is different on the click
 export default FavoriteNote;

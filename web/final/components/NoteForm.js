@@ -21,6 +21,7 @@ const NoteForm = props => {
   const [value, setValue] = useState({ content: props.content || '' });
 
   // update the state when a user types in the form
+  // using the useState hook in the function below 
   const onChange = event => {
     setValue({
       ...value,

@@ -1,5 +1,7 @@
 import { gql } from '@apollo/client';
+// queries are different from mutations in that they do not change the state of the database
 
+// you need to keep track if there is more data that we could load, and we should keep an array of notes too
 const GET_NOTES = gql`
   query noteFeed($cursor: String) {
     noteFeed(cursor: $cursor) {

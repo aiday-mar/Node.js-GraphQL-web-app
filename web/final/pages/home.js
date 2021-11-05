@@ -14,9 +14,14 @@ const Home = () => {
   if (error) return <p>Error!</p>;
 
   // if the data is successful, display the data in our UI
+  // remember than React.Fragment can be used instead of a div 
   return (
     <React.Fragment>
       <NoteFeed notes={data.noteFeed.notes} />
+
+      // Suppose that you can still display more data, then you can display a button which will read "Load more"
+      // When the button is clicked it will call the fetchMore method with the current cursor of the noteFee
+      // You can take the previous and the current result and merge them 
       {data.noteFeed.hasNextPage && (
         <Button
           onClick={() =>

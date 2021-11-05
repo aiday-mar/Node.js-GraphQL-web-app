@@ -16,18 +16,21 @@ const TextArea = styled.textarea`
   height: 90%;
 `;
 
+
 const NoteForm = props => {
 
-  // set the default state of the form
-  const [value, setValue] = useState({ content: props.content || '' });
+  const [value, setValue] = useState({ content: props.content, course: props.course || '' });
 
-  // update the state when a user types in the form
-  // using the useState hook in the function below 
-  const onChange = event => {
-    setValue({
-      ...value,
-      [event.target.name]: event.target.value
-    });
+  const onChangeCourse = event => {
+    let newValue = value;
+    newValue.course = event.target.value
+    setValue(newValue);
+  };
+
+  const onChangeContent = event => {
+    let newValue = value;
+    newValue.content = event.target.value
+    setValue(newValue);
   };
 
   return (
@@ -46,18 +49,18 @@ const NoteForm = props => {
           required
           type="text"
           name="course"
-          placeholder="Course Name"
-          value={value.course}
-          onChange={onChange}
-          style={{height: 50}}
+          placeholder="Course name"
+          //value={value.course}
+          onChange={onChangeCourse}
+          style={{height:100}}
         />
         <TextArea
           required
           type="text"
           name="content"
           placeholder="Note content"
-          value={value.content}
-          onChange={onChange}
+          //value={value.content}
+          onChange={onChangeContent}
         />
         <Button type="submit">Save</Button>
       </Form>

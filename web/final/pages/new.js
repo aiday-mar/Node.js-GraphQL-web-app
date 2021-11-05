@@ -22,7 +22,7 @@ const NewNote = props => {
       props.history.push(`note/${data.newNote.id}`);
     }
   });
-
+  
   return (
     <React.Fragment>
       {/* as the mutation is loading, display a loading message*/}

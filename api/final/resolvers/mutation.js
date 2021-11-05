@@ -28,7 +28,7 @@ module.exports = {
       author: mongoose.Types.ObjectId(user.id),
       favoriteCount: 0,
       // adding the course
-      course: mongoose.Schema.Types.ObjectId(args.course),
+      course: args.course,
     });
   },
 

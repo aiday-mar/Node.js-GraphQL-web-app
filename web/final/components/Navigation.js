@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useQuery } from '@apollo/client';
+import { IS_LOGGED_IN } from '../gql/query';
 
 const Nav = styled.nav`
   padding: 1em;
@@ -42,6 +44,8 @@ const NavList = styled.ul`
 `;
 
 const Navigation = () => {
+  const { loading, error, data } = useQuery(IS_LOGGED_IN);
+
   return (
     <Nav>
       <NavList>
@@ -50,6 +54,8 @@ const Navigation = () => {
             Home
           </Link>
         </li>
+        {data.isLoggedIn ? 
+        (<React.Fragment>
         <li>
           <Link to="/mycourses">
             My Courses
@@ -70,6 +76,8 @@ const Navigation = () => {
             New Note
           </Link>
         </li>
+        </React.Fragment>) :
+        (<li><Link to="/signin">Login</Link></li>)}
       </NavList>
     </Nav>
   );

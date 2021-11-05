@@ -9,6 +9,7 @@ import Layout from '../components/Layout';
 // import our routes
 import Home from './home';
 import MyNotes from './mynotes';
+import MyCourses from './mycourses';
 import Favorites from './favorites';
 import Note from './note';
 import SignUp from './signup';
@@ -30,6 +31,7 @@ const Pages = () => {
         <Route exact path="/" component={Home} />
         <PrivateRoute path="/mynotes" component={MyNotes} />
         <PrivateRoute path="/favorites" component={Favorites} />
+        <PrivateRoute path="/mycourses" component={MyCourses} />
         <Route path="/note/:id" component={Note} />
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
@@ -45,9 +47,7 @@ const Pages = () => {
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { loading, error, data } = useQuery(IS_LOGGED_IN);
-  // if the data is loading, display a loading message
   if (loading) return <p>Loading...</p>;
-  // if there is an error fetching the data, display an error message
   if (error) return <p>Error!</p>;
   
   // suppose that we are logged in then we can render the component with all the associated props

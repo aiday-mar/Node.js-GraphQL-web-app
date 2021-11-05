@@ -10,6 +10,7 @@ import { setContext } from 'apollo-link-context';
 
 // import global styles
 import GlobalStyle from '/components/GlobalStyle';
+
 // import our routes
 import Pages from '/pages';
 
@@ -43,6 +44,7 @@ const data = {
 
 // write the cache data on initial load
 cache.writeData({ data });
+
 // write the cache data after cache is reset
 client.onResetStore(() => cache.writeData({ data }));
 

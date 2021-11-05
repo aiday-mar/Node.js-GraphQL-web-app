@@ -3,7 +3,7 @@ import { gql } from '@apollo/client';
 // The mutation is named with capital letters, the qgl command is written within single quotes
 const NEW_NOTE = gql`
   mutation newNote($content: String!, $course: String!) {
-    newNote(content: $content, author : $course) {
+    newNote(content: $content, course : $course) {
       id
       content
       createdAt

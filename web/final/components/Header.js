@@ -36,6 +36,7 @@ const Header = props => {
   const { data, client } = useQuery(IS_LOGGED_IN);
   const { loading, error, dataMe } = useQuery(GET_ME);
 
+  //  <ProfileLink userId={dataMe.me.id}/>
   return (
     <HeaderBar>
       <img src="https://img.icons8.com/ios-glyphs/30/000000/student-center.png" style={{marginRight:40}}/>
@@ -44,7 +45,7 @@ const Header = props => {
       <UserState>
         {data.isLoggedIn ? (
 			<React.Fragment>
-				<ProfileLink userId={dataMe.me.id}/>
+        {data.isLoggedIn}
 				<ButtonAsLink
 				onClick={() => {
 				  // remove the token

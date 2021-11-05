@@ -51,7 +51,6 @@ const UserForm = props => {
           });
         }}
       >
-        // only when we sign up do we show this 
         {props.formType === 'signup' && (
           <React.Fragment>
             <label htmlFor="username">Username:</label>

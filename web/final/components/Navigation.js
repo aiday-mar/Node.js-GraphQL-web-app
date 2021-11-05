@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const Nav = styled.nav`
   padding: 1em;
-  background: #f5f4f0;
+  background: #871F78  ;
 
   @media (max-width: 700px) {
     padding-top: 64px;
@@ -24,22 +24,20 @@ const NavList = styled.ul`
   list-style: none;
   line-height: 2;
 
-  /* We can nest styles in styled-components */
-  /* The following styles will apply to links within the NavList component */
   a {
     text-decoration: none;
     font-weight: bold;
     font-size: 1.1em;
-    color: #333;
+    color: #ffffff;
   }
 
   a:visited {
-    color: #333;
+    color: #ffffff;
   }
 
   a:hover,
   a:focus {
-    color: #0077cc;
+    color: #ffffff;
   }
 `;
 
@@ -49,34 +47,27 @@ const Navigation = () => {
       <NavList>
         <li>
           <Link to="/">
-            <span aria-hidden="true" role="img">
-              🏠
-            </span>
             Home
           </Link>
         </li>
         <li>
+          <Link to="/mycourses">
+            My Courses
+          </Link>
+        </li>
+        <li>
           <Link to="/mynotes">
-            <span aria-hidden="true" role="img">
-              📓
-            </span>
             My Notes
           </Link>
         </li>
         <li>
           <Link to="/favorites">
-            <span aria-hidden="true" role="img">
-              🌟
-            </span>
-            Favorites
+            Favorite Notes
           </Link>
         </li>
         <li>
           <Link to="/new">
-            <span aria-hidden="true" role="img">
-              ➕
-            </span>
-            New
+            New Note
           </Link>
         </li>
       </NavList>

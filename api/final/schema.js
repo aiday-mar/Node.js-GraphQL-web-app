@@ -1,6 +1,7 @@
 const { gql } = require('apollo-server-express');
 
 // The mutations are defined in the same place as the models 
+// Here all the possible functionalities of the backend API are written in one string
 module.exports = gql`
   scalar DateTime
 

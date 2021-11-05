@@ -4,9 +4,8 @@ import logo from '../img/logo.svg';
 import { useQuery } from '@apollo/client';
 import { Link, withRouter } from 'react-router-dom';
 import ButtonAsLink from './ButtonAsLink';
-import ProfileLink from './ProfileLink';
 import { IS_LOGGED_IN } from '../gql/query';
-import { GET_ME } from '../gql/query';
+import { GET_MY_PROFILE } from '../gql/query';
 
 const HeaderBar = styled.header`
   width: 100%;
@@ -34,9 +33,11 @@ const UserState = styled.div`
 const Header = props => {
   // query hook for user logged in state
   const { data, client } = useQuery(IS_LOGGED_IN);
-  const { loading, error, dataMe } = useQuery(GET_ME);
 
-  //  <ProfileLink userId={dataMe.me.id}/>
+  // solve this when figured out why it gives undefined 
+  const { loading, error, myData } = useQuery(GET_MY_PROFILE);
+  // console.log(myData.me.id);
+
   return (
     <HeaderBar>
       <img src="https://img.icons8.com/ios-glyphs/30/000000/student-center.png" style={{marginRight:40}}/>
@@ -45,7 +46,6 @@ const Header = props => {
       <UserState>
         {data.isLoggedIn ? (
 			<React.Fragment>
-        {data.isLoggedIn}
 				<ButtonAsLink
 				onClick={() => {
 				  // remove the token

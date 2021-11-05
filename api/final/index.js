@@ -17,7 +17,6 @@ const port = process.env.PORT || 4000;
 const DB_HOST = process.env.DB_HOST;
 
 const app = express();
-
 db.connect(DB_HOST);
 
 // Security middleware
@@ -39,7 +38,6 @@ const getUser = token => {
 };
 
 // Apollo Server setup
-// updated to include `validationRules`
 const server = new ApolloServer({
   typeDefs,
   resolvers,

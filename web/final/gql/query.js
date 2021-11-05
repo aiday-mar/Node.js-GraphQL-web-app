@@ -89,6 +89,15 @@ const GET_ME = gql`
   }
 `;
 
+const GET_MY_PROFILE = gql`
+  query me {
+    me {
+      id
+      username
+    }
+  }
+`;
+
 const IS_LOGGED_IN = gql`
   {
     isLoggedIn @client
@@ -101,5 +110,6 @@ export {
   GET_MY_NOTES,
   GET_MY_FAVORITES,
   GET_ME,
+  GET_MY_PROFILE,
   IS_LOGGED_IN
 };

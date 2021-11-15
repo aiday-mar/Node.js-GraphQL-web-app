@@ -1,4 +1,3 @@
-// Require the mongose library
 const mongoose = require('mongoose');
 
 const noteSchema = new mongoose.Schema(
@@ -7,17 +6,18 @@ const noteSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    // reference the author's object ID
+
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      // The author reference to User is the same reference as what is in the favoritedBy array below
       ref: 'User',
       required: true
     },
+
     favoriteCount: {
       type: Number,
       default: 0
     },
+
     favoritedBy: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -27,8 +27,9 @@ const noteSchema = new mongoose.Schema(
 
     // --- added with the course  ---
     course: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'Course',
+      required: true
     },
 
   },

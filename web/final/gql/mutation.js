@@ -16,7 +16,9 @@ const NEW_NOTE = gql`
         username
         id
       }
-      course
+      course {
+        name
+      }
     }
   }
 `;

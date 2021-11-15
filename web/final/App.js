@@ -14,6 +14,14 @@ import GlobalStyle from '/components/GlobalStyle';
 // import our routes
 import Pages from '/pages';
 
+// error handling
+import { ApolloLink } from 'apollo-boost'
+import { onError } from 'apollo-link-error'
+
+const errorLink = onError(({ graphQLErrors }) => {
+  if (graphQLErrors) graphQLErrors.map(({ message }) => console.log(message))
+})
+
 // configure our API URI & cache
 const uri = process.env.API_URI;
 const httpLink = createHttpLink({ uri });
@@ -32,6 +40,7 @@ const authLink = setContext((_, { headers }) => {
 // create the Apollo client
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
+  link: ApolloLink.from([errorLink]),
   cache,
   resolvers: {},
   connectToDevTools: true

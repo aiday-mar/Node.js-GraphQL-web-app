@@ -9,9 +9,9 @@ module.exports = {
     return await models.Note.find({ favoritedBy: user._id }).sort({ _id: -1 });
   },
 
-  // my courses 
-  mycourses: async (user, args, { models }) => {
-    return await user.courses;
+  // --- courses favorited by the user ---
+  courses: async (user, args, { models }) => {
+    return await models.Course.find({ favoritedBy: user._id }).sort({ _id: -1 });
   },
 };
 

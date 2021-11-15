@@ -1,12 +1,13 @@
 const { gql } = require('apollo-server-express');
 
-// The mutations are defined in the same place as the models 
-// Here all the possible functionalities of the backend API are written in one string
 module.exports = gql`
   scalar DateTime
 
   type Course {
+    id: ID!
     name: String!
+    favoriteCount: Int!
+    favoritedBy: [User]
   }
 
   type Note {
@@ -18,7 +19,7 @@ module.exports = gql`
     createdAt: DateTime!
     updatedAt: DateTime!
 
-    course: String
+    course: Course
   }
 
   type User {
@@ -26,11 +27,11 @@ module.exports = gql`
     username: String!
     email: String!
     avatar: String
+
     notes: [Note!]!
     favorites: [Note!]!
 
-    courses: [String]
-    mycourses: [String]
+    courses: [Course!]!
   }
 
   type NoteFeed {
@@ -51,12 +52,16 @@ module.exports = gql`
   }
 
   type Mutation {
-    addCourse(name : String): Course
+    addCourse(name : String!): Course
+    deleteCourse(id: ID!): Boolean!
 
     newNote(content: String!, course: String!): Note
-    updateNote(id: ID!, content: String!): Note!
     deleteNote(id: ID!): Boolean!
+    updateNote(id: ID!, content: String!, course: String!): Note!
+
     toggleFavorite(id: ID!): Note!
+    toggleFavoriteCourse(id: ID!): Course!
+
     signUp(username: String!, email: String!, password: String!): String!
     signIn(username: String, email: String, password: String!): String!
   }

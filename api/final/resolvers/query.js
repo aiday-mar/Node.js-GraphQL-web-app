@@ -1,7 +1,7 @@
 // Here we define query functions, which do not change the database 
 
 module.exports = {
-  // added with course
+  // added with course - OK
   allcourses: async (parent, args, { models }) => {
     return await models.Course.find().limit(100);
   },

@@ -9,79 +9,110 @@ require('dotenv').config();
 const gravatar = require('../util/gravatar');
 
 module.exports = {
+
+  // VERIFIED : { "_id" : ObjectId("619268d5315dcd3d70d20390"), "favoriteCount" : 0, "favoritedBy" : [ ], "name" : "GraphQL fundamentals", "__v" : 0 }
+  addCourse: async (parent, args, { models, user }) => {
+    
+    if (!user) {
+      throw new AuthenticationError('You must be signed in to add a course');
+    }
+
+    return await models.Course.create({
+      name: args.name,
+      favoriteCount: 0,
+    });
+  },
+
+  // VERIFIED
+  deleteCourse: async (parent, { id }, { models, user }) => {
+
+    if (!user) {
+      throw new AuthenticationError('You must be signed in to delete a course');
+    }
+
+    const course = await models.Course.findById(id);
+    
+    try {
+      await course.remove();
+      return true;
+    } catch (err) {
+      return false;
+    }
+  },
+
+  // --- when you add a note, you need the content and the name of the course ---
   newNote: async (parent, args, { models, user }) => {
     
-    // If the current user does not exist yet, then we throw an authentication error
     if (!user) {
       throw new AuthenticationError('You must be signed in to create a note');
     }
 
-    // adding the course
-    models.Course.create({
-      name: args.course
-    })
+    var courseId = "0";
 
-    // Otherwise we access the Note model, and inside we create a new note with 
-    // the content being the content of the argument and the author is the id of the current user
+    await models.Course.find({ name: args.course }, async function (err, docs) {
+      if (!docs.length) {
+        await models.Course.create({
+          name: args.course, 
+          favoriteCount: 0,
+        });
+    
+        await models.Course.find({ name: args.course }, function (err, res) {
+          courseId = res[0].id;
+        });
+      } else {
+        courseId = docs[0].id;
+      }
+    });
+
     return await models.Note.create({
-      content: args.content,
+      content: args.content, 
       author: mongoose.Types.ObjectId(user.id),
       favoriteCount: 0,
-      // adding the course
-      course: args.course,
+      
+      course: mongoose.Types.ObjectId(courseId)
     });
   },
 
-  // ADD THE POSSIBILITY TO ADD COURSES
-
   deleteNote: async (parent, { id }, { models, user }) => {
-    // if not a user, throw an Authentication Error
+
     if (!user) {
       throw new AuthenticationError('You must be signed in to delete a note');
     }
 
-    // find the note using the findById function of the Node model
-    // await literally suspends the function execution until the promise settles, and then resumes it with the promise result.
     const note = await models.Note.findById(id);
     
-    // if the note owner and current user don't match, throw a forbidden error
-    // You can access the note ownor by writing note.author, where note is a Note
     if (note && String(note.author) !== user.id) {
       throw new ForbiddenError("You don't have permissions to delete the note");
     }
 
     try {
-      // if everything checks out, remove the note
       await note.remove();
       return true;
     } catch (err) {
-      // if there's an error along the way, return false
       return false;
     }
   },
-  updateNote: async (parent, { content, id }, { models, user }) => {
-    // if not a user, throw an Authentication Error
+
+  updateNote: async (parent, { id, content, course }, { models, user }) => {
+
     if (!user) {
       throw new AuthenticationError('You must be signed in to update a note');
     }
 
-    // find the note
     const note = await models.Note.findById(id);
-    // if the note owner and current user don't match, throw a forbidden error
+
     if (note && String(note.author) !== user.id) {
       throw new ForbiddenError("You don't have permissions to update the note");
     }
 
-    // Update the note in the db and return the updated note
-    // await forces the process to run this function before running anything else 
     return await models.Note.findOneAndUpdate(
       {
         _id: id
       },
       {
         $set: {
-          // we're setting a new content 
-          content
+          content : content,
+          course : course
         }
       },
       {
@@ -91,7 +122,7 @@ module.exports = {
   },
   
   toggleFavorite: async (parent, { id }, { models, user }) => {
-    // if no user context is passed, throw auth error
+
     if (!user) {
       throw new AuthenticationError();
     }
@@ -143,23 +174,43 @@ module.exports = {
     }
   },
 
-  addCourse: async (parent, { name }, { models, user }) => {
+  toggleFavoriteCourse : async (parent, { id }, { models, user }) => {
 
     if (!user) {
       throw new AuthenticationError();
     }
 
-    const hasCourse = user.courses.indexOf(name);
+    let courseCheck = await models.Course.findById(id);
+    const hasUser = courseCheck.favoritedBy.indexOf(user.id);
 
-    if (hasCourse >= 0) {
-      return user.courses;
+    if (hasUser >= 0) {
+      return await models.Course.findByIdAndUpdate(
+        id,
+        {
+          $pull: {
+            // we remove the user.id from the favoritedBy array
+            favoritedBy: mongoose.Types.ObjectId(user.id)
+          },
+          $inc: {
+            // we decrement the favoriteCount by one 
+            favoriteCount: -1
+          }
+        },
+        {
+          // Set new to true to return the updated doc
+          new: true
+        }
+      );
     } else {
-      // if the course doesn't exist in the user array then add it
-      return await models.User.findByIdAndUpdate(
-        user.id,
+      return await models.Course.findByIdAndUpdate(
+        id,
         {
           $push: {
-            courses: name
+            // otherwise we push the user.id into the favoritedBy array
+            favoritedBy: mongoose.Types.ObjectId(user.id)
+          },
+          $inc: {
+            favoriteCount: 1
           }
         },
         {
@@ -176,13 +227,14 @@ module.exports = {
     const hashed = await bcrypt.hash(password, 10);
     // create the gravatar url from the trimmed and lower case email
     const avatar = gravatar(email);
+
     try {
       // creating a new user in the User model
       const user = await models.User.create({
         username,
         email,
         avatar,
-        password: hashed
+        password: hashed,
       });
 
       // create and return the json web token using the JWT_SECRET defined in the .env file 

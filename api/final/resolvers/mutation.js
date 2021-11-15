@@ -73,6 +73,7 @@ module.exports = {
     });
   },
 
+  // continue from here 
   deleteNote: async (parent, { id }, { models, user }) => {
 
     if (!user) {

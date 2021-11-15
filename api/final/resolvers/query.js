@@ -5,7 +5,7 @@ module.exports = {
   allcourses: async (parent, args, { models }) => {
     return await models.Course.find().limit(100);
   },
-  //
+  // NOT CHANGED
   notes: async (parent, args, { models }) => {
     return await models.Note.find().limit(100);
   },

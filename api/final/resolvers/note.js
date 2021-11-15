@@ -8,6 +8,7 @@ module.exports = {
     return await models.User.find({ _id: { $in: note.favoritedBy } });
   },
 
+  // VERIFIED
   course : async (note, args, { models }) => {
     return await models.Course.findById(note.course);
   },

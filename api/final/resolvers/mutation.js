@@ -94,6 +94,7 @@ module.exports = {
     }
   },
 
+  // VERIFIED - although need to run twice in gql playground for it to return correctly? 
   updateNote: async (parent, { id, content, course }, { models, user }) => {
 
     if (!user) {
@@ -139,6 +140,7 @@ module.exports = {
     );
   },
   
+  // NOT CHANGED
   toggleFavorite: async (parent, { id }, { models, user }) => {
 
     if (!user) {
@@ -192,6 +194,7 @@ module.exports = {
     }
   },
 
+  // VERIFIED
   toggleFavoriteCourse : async (parent, { id }, { models, user }) => {
 
     if (!user) {

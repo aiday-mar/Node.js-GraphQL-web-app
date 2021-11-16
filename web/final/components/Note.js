@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 
 import NoteUser from './NoteUser';
+import CourseUser from './CourseUser';
 import { IS_LOGGED_IN } from '../gql/query';
 
-// Keep notes from extending wider than 800px
 const StyledNote = styled.article`
   max-width: 800px;
   margin: 0 auto;
@@ -33,8 +33,10 @@ const UserActions = styled.div`
 
 const Note = ({ note }) => {
   const { loading, error, data } = useQuery(IS_LOGGED_IN);
+
   // if the data is loading, display a loading message
   if (loading) return <p>Loading...</p>;
+
   // if there is an error fetching the data, display an error message
   if (error) return <p>Error!</p>;
 
@@ -64,7 +66,7 @@ const Note = ({ note }) => {
       </MetaData>
       <b style={{display: 'inline-block'}}><ReactMarkdown source={note.course.name}/></b>
       {data.isLoggedIn ? (
-        <div style={{display: 'inline-block'}}>&nbsp;&nbsp;<button style={{border: '0px', paddingLeft: '4px', borderRadius: '5px'}}>♡&nbsp;{note.course.favoriteCount}</button></div>
+        <CourseUser note={note} />
       ) : (<div></div>)}
       <ReactMarkdown source={note.content} />
     </StyledNote>

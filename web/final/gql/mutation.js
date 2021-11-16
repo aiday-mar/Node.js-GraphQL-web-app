@@ -59,6 +59,15 @@ const TOGGLE_FAVORITE = gql`
   }
 `;
 
+const TOGGLE_FAVORITE_COURSE = gql`
+  mutation toggleFavoriteCourse($id: ID!) {
+    toggleFavoriteCourse(id: $id) {
+      id
+      favoriteCount
+    }
+  }
+`;
+
 const SIGNIN_USER = gql`
   mutation signIn($email: String, $password: String!) {
     signIn(email: $email, password: $password)
@@ -85,6 +94,7 @@ export {
   EDIT_NOTE,
   DELETE_NOTE,
   TOGGLE_FAVORITE,
+  TOGGLE_FAVORITE_COURSE,
   SIGNIN_USER,
   SIGNUP_USER,
 

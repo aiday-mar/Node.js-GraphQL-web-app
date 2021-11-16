@@ -87,7 +87,8 @@ const GET_MY_FAVORITES = gql`
           avatar
         }
       }
-      course {
+      courses {
+        id
         name
         favoriteCount
       }
@@ -100,6 +101,9 @@ const GET_ME = gql`
     me {
       id
       favorites {
+        id
+      }
+      courses {
         id
       }
     }
@@ -147,8 +151,7 @@ export {
   GET_ME,
   GET_MY_PROFILE,
   IS_LOGGED_IN,
-
   // --- courses ---
   GET_MY_COURSES,
-  GET_COURSES,
+  GET_COURSES
 };

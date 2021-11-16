@@ -62,6 +62,8 @@ const Note = ({ note }) => {
           </UserActions>
         )}
       </MetaData>
+      <b style={{display: 'inline-block'}}><ReactMarkdown source={note.course.name}/></b> 
+      <div style={{display: 'inline-block'}}>&nbsp;&nbsp;<button style={{border: '0px', paddingLeft: '4px', borderRadius: '5px'}}>♡&nbsp;{note.course.favoriteCount}</button></div>
       <ReactMarkdown source={note.content} />
     </StyledNote>
   );

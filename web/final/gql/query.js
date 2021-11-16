@@ -17,6 +17,10 @@ const GET_NOTES = gql`
           id
           avatar
         }
+        course {
+          name
+          favoriteCount
+        }
       }
     }
   }

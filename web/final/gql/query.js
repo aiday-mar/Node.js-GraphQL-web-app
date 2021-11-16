@@ -61,6 +61,10 @@ const GET_MY_NOTES = gql`
           id
           avatar
         }
+        course {
+          name
+          favoriteCount
+        }
       }
     }
   }
@@ -71,6 +75,7 @@ const GET_MY_FAVORITES = gql`
     me {
       id
       username
+      email
       favorites {
         id
         createdAt
@@ -81,6 +86,10 @@ const GET_MY_FAVORITES = gql`
           id
           avatar
         }
+      }
+      course {
+        name
+        favoriteCount
       }
     }
   }
@@ -102,6 +111,7 @@ const GET_MY_PROFILE = gql`
     me {
       id
       username
+      email
     }
   }
 `;
@@ -124,6 +134,7 @@ const GET_MY_COURSES = gql`
   query courses {
     courses {
       name
+      favoriteCount
     }
   }
 `;

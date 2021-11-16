@@ -23,7 +23,13 @@ const NoteUser = props => {
       <br />
       {data.me.id === props.note.author.id && (
         <React.Fragment>
-          <Link to={`/edit/${props.note.id}`}>Edit</Link> <br />
+          <Link
+            to={`/edit/${props.note.id}`}
+            style={{ textDecoration: 'none' }}
+          >
+            Edit
+          </Link>{' '}
+          <br />
           <DeleteNote noteId={props.note.id} />
         </React.Fragment>
       )}

@@ -6,7 +6,7 @@ const ButtonAsLink = styled.button`
   border: none;
   padding: 0;
   font: inherit;
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer;
 
   :hover,

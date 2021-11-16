@@ -11,8 +11,6 @@ const FavoriteCourse = props => {
     props.me.courses.filter(course => course.id === props.courseId).length > 0
   );
 
-  console.log(props.courseId);
-
   const [toggleFavoriteCourse] = useMutation(TOGGLE_FAVORITE_COURSE, {
     variables: {
       id: props.courseId

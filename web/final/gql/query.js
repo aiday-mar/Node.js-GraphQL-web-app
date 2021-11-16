@@ -38,6 +38,10 @@ const GET_NOTE = gql`
         id
         avatar
       }
+      course {
+        name
+        favoriteCount
+      }
     }
   }
 `;

@@ -52,7 +52,7 @@ module.exports = gql`
   }
 
   type Mutation {
-    addCourse(name : String!): Course
+    addCourse(name: String!): Course
     deleteCourse(id: ID!): Boolean!
 
     newNote(content: String!, course: String!): Note

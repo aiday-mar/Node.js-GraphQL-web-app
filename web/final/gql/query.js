@@ -18,6 +18,7 @@ const GET_NOTES = gql`
           avatar
         }
         course {
+          id
           name
           favoriteCount
         }
@@ -39,6 +40,7 @@ const GET_NOTE = gql`
         avatar
       }
       course {
+        id
         name
         favoriteCount
       }
@@ -62,6 +64,7 @@ const GET_MY_NOTES = gql`
           avatar
         }
         course {
+          id
           name
           favoriteCount
         }
@@ -129,7 +132,9 @@ const IS_LOGGED_IN = gql`
 const GET_COURSES = gql`
   query allcourses {
     allcourses {
+      id
       name
+      favoriteCount
     }
   }
 `;
@@ -137,6 +142,7 @@ const GET_COURSES = gql`
 const GET_MY_COURSES = gql`
   query courses {
     courses {
+      id
       name
       favoriteCount
     }

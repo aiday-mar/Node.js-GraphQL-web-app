@@ -11,6 +11,8 @@ const FavoriteCourse = props => {
     props.me.courses.filter(course => course.id === props.courseId).length > 0
   );
 
+  console.log(props.courseId);
+
   const [toggleFavoriteCourse] = useMutation(TOGGLE_FAVORITE_COURSE, {
     variables: {
       id: props.courseId
@@ -23,8 +25,12 @@ const FavoriteCourse = props => {
       {favorited ? (
         <div style={{ display: 'inline-block' }}>
           &nbsp;&nbsp;
-          <button
-            style={{ border: '0px', paddingLeft: '4px', borderRadius: '5px' }}
+          <ButtonAsLink
+            style={{
+              border: '0px',
+              paddingLeft: '4px',
+              borderRadius: '5px'
+            }}
             onClick={() => {
               toggleFavoriteCourse();
               setFavorited(false);
@@ -32,13 +38,17 @@ const FavoriteCourse = props => {
             }}
           >
             <div style={{ color: 'red' }}>♡&nbsp;</div>
-          </button>
+          </ButtonAsLink>
         </div>
       ) : (
         <div style={{ display: 'inline-block' }}>
           &nbsp;&nbsp;
-          <button
-            style={{ border: '0px', paddingLeft: '4px', borderRadius: '5px' }}
+          <ButtonAsLink
+            style={{
+              border: '0px',
+              paddingLeft: '4px',
+              borderRadius: '5px'
+            }}
             onClick={() => {
               toggleFavoriteCourse();
               setFavorited(true);
@@ -46,10 +56,10 @@ const FavoriteCourse = props => {
             }}
           >
             ♡&nbsp;
-          </button>
+          </ButtonAsLink>
         </div>
       )}
-      : {count}
+      {count}
     </React.Fragment>
   );
 };

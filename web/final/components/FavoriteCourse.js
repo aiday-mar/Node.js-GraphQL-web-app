@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
+import ReactMarkdown from 'react-markdown';
 
 import ButtonAsLink from './ButtonAsLink';
 import { TOGGLE_FAVORITE_COURSE } from '../gql/mutation';
@@ -20,6 +21,9 @@ const FavoriteCourse = props => {
 
   return (
     <React.Fragment>
+      <b style={{ display: 'inline-block' }}>
+        <ReactMarkdown source={props.courseName} />
+      </b>
       {favorited ? (
         <div style={{ display: 'inline-block' }}>
           &nbsp;&nbsp;

@@ -64,10 +64,15 @@ const Note = ({ note }) => {
           </UserActions>
         )}
       </MetaData>
-      <b style={{display: 'inline-block'}}><ReactMarkdown source={note.course.name}/></b>
       {data.isLoggedIn ? (
         <CourseUser note={note} />
-      ) : (<div></div>)}
+      ) : (
+        <div>
+          <b style={{ display: 'inline-block' }}>
+            <ReactMarkdown source={note.course.name} />
+          </b>
+        </div>
+      )}
       <ReactMarkdown source={note.content} />
     </StyledNote>
   );

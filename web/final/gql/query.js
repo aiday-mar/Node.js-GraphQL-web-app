@@ -140,11 +140,15 @@ const GET_COURSES = gql`
 `;
 
 const GET_MY_COURSES = gql`
-  query courses {
-    courses {
+  query me {
+    me {
       id
-      name
-      favoriteCount
+      username
+      courses {
+        id
+        name
+        favoriteCount
+      }
     }
   }
 `;

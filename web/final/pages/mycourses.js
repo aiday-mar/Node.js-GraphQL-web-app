@@ -12,8 +12,8 @@ const MyCourses = () => {
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
-  if (data.courses.length !== 0) {
-    return <CourseComponent notes={data.courses} />;
+  if (data.me.courses.length !== 0) {
+    return <CourseComponent courses={data.me.courses} />;
   } else {
     return <p>No courses yet</p>;
   }

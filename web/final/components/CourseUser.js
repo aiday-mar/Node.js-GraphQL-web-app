@@ -9,12 +9,13 @@ const CourseUser = props => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error!</p>;
 
-  console.log(props.note.course.id);
+  //console.log(props.note.course.id);
 
   return (
     <FavoriteCourse
       me={data.me}
       courseId={props.note.course.id}
+      courseName={props.note.course.name}
       favoriteCount={props.note.course.favoriteCount}
     />
   );

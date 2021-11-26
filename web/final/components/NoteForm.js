@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
 import Button from './Button';
 
 const Wrapper = styled.div`
@@ -16,20 +15,23 @@ const TextArea = styled.textarea`
   height: 90%;
 `;
 
-
 const NoteForm = props => {
+  const [value, setValue] = useState({
+    content: props.content,
+    course: props.course || ''
+  });
 
-  const [value, setValue] = useState({ content: props.content, course: props.course || '' });
-
+  // The onChange methods store correctly the input values
   const onChangeCourse = event => {
     let newValue = value;
-    newValue.course = event.target.value
+    newValue.course = event.target.value;
     setValue(newValue);
+    //console.log(value);
   };
 
   const onChangeContent = event => {
     let newValue = value;
-    newValue.content = event.target.value
+    newValue.content = event.target.value;
     setValue(newValue);
   };
 
@@ -38,6 +40,7 @@ const NoteForm = props => {
       <Form
         onSubmit={e => {
           e.preventDefault();
+          console.log(value);
           props.action({
             variables: {
               ...value
@@ -50,16 +53,14 @@ const NoteForm = props => {
           type="text"
           name="course"
           placeholder="Course name"
-          //value={value.course}
           onChange={onChangeCourse}
-          style={{height:100}}
+          style={{ height: 100 }}
         />
         <TextArea
           required
           type="text"
           name="content"
           placeholder="Note content"
-          //value={value.content}
           onChange={onChangeContent}
         />
         <Button type="submit">Save</Button>

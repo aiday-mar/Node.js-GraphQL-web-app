@@ -7,7 +7,6 @@ import { GET_MY_NOTES, GET_NOTES } from '../gql/query';
 
 const NewNote = props => {
   useEffect(() => {
-    // update the document title
     document.title = 'New Course Note';
   });
 

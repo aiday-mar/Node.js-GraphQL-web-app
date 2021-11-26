@@ -9,29 +9,26 @@ require('dotenv').config();
 const gravatar = require('../util/gravatar');
 
 module.exports = {
-
   // VERIFIED : { "_id" : ObjectId("619268d5315dcd3d70d20390"), "favoriteCount" : 0, "favoritedBy" : [ ], "name" : "GraphQL fundamentals", "__v" : 0 }
   addCourse: async (parent, args, { models, user }) => {
-    
     if (!user) {
       throw new AuthenticationError('You must be signed in to add a course');
     }
 
     return await models.Course.create({
       name: args.name,
-      favoriteCount: 0,
+      favoriteCount: 0
     });
   },
 
   // VERIFIED
   deleteCourse: async (parent, { id }, { models, user }) => {
-
     if (!user) {
       throw new AuthenticationError('You must be signed in to delete a course');
     }
 
     const course = await models.Course.findById(id);
-    
+
     try {
       await course.remove();
       return true;
@@ -43,45 +40,40 @@ module.exports = {
   // --- when you add a note, you need the content and the name of the course ---
   // VERIFIED
   newNote: async (parent, args, { models, user }) => {
-    
     if (!user) {
       throw new AuthenticationError('You must be signed in to create a note');
     }
 
-    var courseId = "0";
+    var courseId = '0';
 
-    await models.Course.find({ name: args.course }, async function (err, docs) {
+    await models.Course.find({ name: args.course }, async function(err, docs) {
       if (!docs.length) {
         await models.Course.create({
-          name: args.course, 
-          favoriteCount: 0,
+          name: args.course,
+          favoriteCount: 0
         });
-    
-        await models.Course.find({ name: args.course }, function (err, res) {
-          courseId = res[0].id;
-        });
-      } else {
-        courseId = docs[0].id;
       }
     });
 
+    await models.Course.find({ name: args.course }, async function(err, docs) {
+      courseId = docs[0].id;
+    });
+
     return await models.Note.create({
-      content: args.content, 
+      content: args.content,
       author: mongoose.Types.ObjectId(user.id),
       favoriteCount: 0,
-      
-      course: mongoose.Types.ObjectId(courseId)
+      course: courseId //mongoose.Types.ObjectId(courseId)
     });
   },
 
   deleteNote: async (parent, { id }, { models, user }) => {
-
     if (!user) {
       throw new AuthenticationError('You must be signed in to delete a note');
     }
 
     const note = await models.Note.findById(id);
-    
+
     if (note && String(note.author) !== user.id) {
       throw new ForbiddenError("You don't have permissions to delete the note");
     }
@@ -94,9 +86,8 @@ module.exports = {
     }
   },
 
-  // VERIFIED - although need to run twice in gql playground for it to return correctly? 
+  // VERIFIED - although need to run twice in gql playground for it to return correctly?
   updateNote: async (parent, { id, content, course }, { models, user }) => {
-
     if (!user) {
       throw new AuthenticationError('You must be signed in to update a note');
     }
@@ -107,16 +98,16 @@ module.exports = {
       throw new ForbiddenError("You don't have permissions to update the note");
     }
 
-    var courseId = "0";
+    var courseId = '0';
 
-    await models.Course.find({ name: course }, async function (err, docs) {
+    await models.Course.find({ name: course }, async function(err, docs) {
       if (!docs.length) {
         await models.Course.create({
-          name: course, 
-          favoriteCount: 0,
+          name: course,
+          favoriteCount: 0
         });
-    
-        await models.Course.find({ name: course }, function (err, res) {
+
+        await models.Course.find({ name: course }, function(err, res) {
           courseId = res[0].id;
         });
       } else {
@@ -130,8 +121,8 @@ module.exports = {
       },
       {
         $set: {
-          content : content,
-          course : mongoose.Types.ObjectId(courseId)
+          content: content,
+          course: mongoose.Types.ObjectId(courseId)
         }
       },
       {
@@ -139,18 +130,17 @@ module.exports = {
       }
     );
   },
-  
+
   // NOT CHANGED
   toggleFavorite: async (parent, { id }, { models, user }) => {
-
     if (!user) {
       throw new AuthenticationError();
     }
 
     // check to see if the user has already favorited the note
     let noteCheck = await models.Note.findById(id);
-    
-    // once the note is found, you can check if in that note, you can find the user.id, and which index it would have in that case 
+
+    // once the note is found, you can check if in that note, you can find the user.id, and which index it would have in that case
     const hasUser = noteCheck.favoritedBy.indexOf(user.id);
 
     // if the user exists in the list
@@ -164,7 +154,7 @@ module.exports = {
             favoritedBy: mongoose.Types.ObjectId(user.id)
           },
           $inc: {
-            // we decrement the favoriteCount by one 
+            // we decrement the favoriteCount by one
             favoriteCount: -1
           }
         },
@@ -195,8 +185,7 @@ module.exports = {
   },
 
   // VERIFIED
-  toggleFavoriteCourse : async (parent, { id }, { models, user }) => {
-
+  toggleFavoriteCourse: async (parent, { id }, { models, user }) => {
     if (!user) {
       throw new AuthenticationError();
     }
@@ -213,7 +202,7 @@ module.exports = {
             favoritedBy: mongoose.Types.ObjectId(user.id)
           },
           $inc: {
-            // we decrement the favoriteCount by one 
+            // we decrement the favoriteCount by one
             favoriteCount: -1
           }
         },
@@ -256,10 +245,10 @@ module.exports = {
         username,
         email,
         avatar,
-        password: hashed,
+        password: hashed
       });
 
-      // create and return the json web token using the JWT_SECRET defined in the .env file 
+      // create and return the json web token using the JWT_SECRET defined in the .env file
       return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     } catch (err) {
       // if there's a problem creating the account, throw an error
@@ -273,7 +262,7 @@ module.exports = {
       email = email.trim().toLowerCase();
     }
 
-    // we find in the User model, either the email or the username we have been provided with 
+    // we find in the User model, either the email or the username we have been provided with
     const user = await models.User.findOne({
       $or: [{ email }, { username }]
     });
@@ -290,7 +279,7 @@ module.exports = {
     }
 
     // create and return the json web token
-    // for this we need the id associated to the user 
+    // for this we need the id associated to the user
     return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
   }
 };

@@ -25,8 +25,8 @@ const NEW_NOTE = gql`
 `;
 
 const EDIT_NOTE = gql`
-  mutation updateNote($id: ID!, $content: String!) {
-    updateNote(id: $id, content: $content) {
+  mutation updateNote($id: ID!, $content: String!, $course: String!) {
+    updateNote(id: $id, content: $content, course: $course) {
       id
       content
       createdAt
@@ -38,6 +38,10 @@ const EDIT_NOTE = gql`
       author {
         username
         id
+      }
+      course {
+        id
+        name
       }
     }
   }

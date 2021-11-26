@@ -37,7 +37,6 @@ module.exports = {
     }
   },
 
-  // --- when you add a note, you need the content and the name of the course ---
   // VERIFIED
   newNote: async (parent, args, { models, user }) => {
     if (!user) {
@@ -106,13 +105,11 @@ module.exports = {
           name: course,
           favoriteCount: 0
         });
-
-        await models.Course.find({ name: course }, function(err, res) {
-          courseId = res[0].id;
-        });
-      } else {
-        courseId = docs[0].id;
       }
+    });
+
+    await models.Course.find({ name: course }, async function(err, docs) {
+      courseId = docs[0].id;
     });
 
     return await models.Note.findOneAndUpdate(
@@ -122,7 +119,7 @@ module.exports = {
       {
         $set: {
           content: content,
-          course: mongoose.Types.ObjectId(courseId)
+          course: courseId // mongoose.Types.ObjectId(courseId)
         }
       },
       {

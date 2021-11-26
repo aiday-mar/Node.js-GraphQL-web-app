@@ -89,6 +89,11 @@ const GET_MY_FAVORITES = gql`
           id
           avatar
         }
+        course {
+          id
+          name
+          favoriteCount
+        }
       }
       courses {
         id

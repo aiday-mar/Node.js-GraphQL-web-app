@@ -29,38 +29,41 @@ const UserState = styled.div`
   margin-left: auto;
 `;
 
-
 const Header = props => {
   // query hook for user logged in state
   const { data, client } = useQuery(IS_LOGGED_IN);
 
-  // solve this when figured out why it gives undefined 
+  // solve this when figured out why it gives undefined
   const { loading, error, myData } = useQuery(GET_MY_PROFILE);
   // console.log(myData.me.id);
 
   return (
     <HeaderBar>
-      <img src="https://img.icons8.com/ios-glyphs/30/000000/student-center.png" style={{marginRight:40}}/>
+      <img
+        src="https://img.icons8.com/ios-glyphs/30/000000/student-center.png"
+        style={{ marginRight: 40 }}
+      />
       <LogoText>Study Better</LogoText>
       {/* If logged in display a log out link, else display sign in options */}
       <UserState>
         {data.isLoggedIn ? (
-			<React.Fragment>
-				<ButtonAsLink
-				onClick={() => {
-				  // remove the token
-				  localStorage.removeItem('token');
-				  // clear the application's cache
-				  client.resetStore();
-				  // update local state
-				  client.writeData({ data: { isLoggedIn: false } });
-				  // redirect the user to the homepage
-				  props.history.push('/');
-				}}
-				>
-				Logout
-			  </ButtonAsLink>
-		  </React.Fragment>
+          <React.Fragment>
+            <ButtonAsLink
+              onClick={() => {
+                // remove the token
+                localStorage.removeItem('token');
+                // clear the application's cache
+                client.resetStore();
+                // update local state
+                client.writeData({ data: { isLoggedIn: false } });
+                // redirect the user to the homepage
+                window.location.reload(true);
+                props.history.push('/');
+              }}
+            >
+              Logout
+            </ButtonAsLink>
+          </React.Fragment>
         ) : (
           <p>
             <Link to={'/signin'}>Sign In</Link> or{' '}

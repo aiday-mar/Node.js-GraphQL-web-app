@@ -52,16 +52,17 @@ const NoteForm = props => {
           required
           type="text"
           name="course"
-          placeholder="Course name"
+          placeholder="Course Name"
           onChange={onChangeCourse}
-          style={{ height: 100 }}
+          style={{ height: 40, padding: 10 }}
         />
         <TextArea
           required
           type="text"
           name="content"
-          placeholder="Note content"
+          placeholder="Lecture Content"
           onChange={onChangeContent}
+          style={{ padding: 10 }}
         />
         <Button type="submit">Save</Button>
       </Form>

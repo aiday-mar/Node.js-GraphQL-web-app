@@ -8,4 +8,4 @@ username: aiday <br/>
 email: test@gmail.com <br/>
 password: test <br/>
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![alt text](https://github.com/aiday-mar/Node.js-GraphQL-web-app/blob/master/study-app.PNG?raw=true)

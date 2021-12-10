@@ -8,4 +8,6 @@ username: aiday <br/>
 email: test@gmail.com <br/>
 password: test <br/>
 
+![alt text](https://github.com/aiday-mar/Node.js-GraphQL-web-app/blob/master/study-app2.PNG?raw=true)
+
 ![alt text](https://github.com/aiday-mar/Node.js-GraphQL-web-app/blob/master/study-app.PNG?raw=true)

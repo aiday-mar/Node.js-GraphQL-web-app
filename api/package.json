@@ -4,7 +4,7 @@
   "main": "final/index.js",
   "scripts": {
     "final": "nodemon final/index.js",
-	"start": "nodemon final/index.js",
+	  "start": "nodemon final/index.js",
     "lint": "eslint \"src/**/*.js\""
   },
   "repository": {
